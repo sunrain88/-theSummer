@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第二种轮播图</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        div.frame{
+            width: 100%;
+            height: 600px;
+            background-color: aqua;
+        }
+        div.imgbox{
+            width: 1000px;
+            height: 300px;
+            margin: auto;
+            background-color: blueviolet;
+        }
+        ul#ul{
+            top: 50px;
+            width: 100%;
+            height: 300px;
+            background-color: aliceblue;
+            position: relative;
+            list-style: none;
+            overflow: hidden;
+        }
+        ul#ul li{
+            width: 400px;
+            height: 280px;
+            position: absolute;
+            background-color: brown;
+            transition: width 0.5s linear,
+            height 0.5s linear;
+        }
+        ul#ul li img{
+            width: 100%;
+            height: 100%;
+
+        }
+        ul#ul li:hover{
+            height: 300px;
+            width: 450px;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+   <div class = "frame">
+       <div class = "imgbox">
+           <ul id = "ul">
+               <li><img src="nice-picture/c2b.jpg" alt="图片1"/></li>
+               <li><img src="nice-picture/c11.jpg" alt="图片2"/></li>
+               <li><img src="nice-picture/c04.jpg" alt="图片3"/></li>
+               <li><img src="nice-picture/c27.jpg" alt="图片4"/></li>
+               <li><img src="nice-picture/c34.jpg" alt="图片5"/></li>
+           </ul>
+       </div>
+   </div>
+   <script>
+       var ul =document.getElementById("ul");
+       var lis =ul.children;
+       var les = new Array(lis.length);
+       console.log(les.length);
+       for(var i = 0 ; i < lis.length ; i++){
+           les[i] = lis[i].offsetWidth * i;
+           lis[i].style.left = lis[i].offsetWidth * i + "px";
+       }
+       var timer = setInterval(function(){
+          for(i = 0 ;i < lis.length ; i++){
+              les[i]++;
+              console.log(les[i]);
+              if(les[i] > lis[i].offsetWidth * 4)
+              les[i] = -lis[i].offsetWidth;
+          }
+           for( i = 0 ; i < lis.length ; i++){
+               lis[i].style.left = les[i] + "px";
+           }
+       },10);
+   </script>
+</body>
+</html>
