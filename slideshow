@@ -114,7 +114,7 @@
             if(lis[i].value == 2){
                 lis[i].style.opacity = nus[0];
             }
-            if(lis[i].valufe ==1){
+            if(lis[i].value ==1){
                 lis[i].style.opacity = nus[1];
             }
             if(lis[i].value ==0){
