@@ -1,2 +1,2 @@
 # theSummer
-some attempts and explorations on JavaScript and Java
+some attempts and explorations on JavaScript
