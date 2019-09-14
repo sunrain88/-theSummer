@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>扫雷2</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        div.frame{
+            width: 100%;
+            height: 500px;
+        }
+        div.main{
+            width: 400px;
+            height: 400px;
+            margin: 50px auto;
+            background-color: darkgray;
+            border: 1px solid;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        <div class="main"></div>
+    </div>
+    <script>
+        var temp = 0;
+        var main = document.getElementsByClassName("main")[0];
+        var x = new Array(10);
+        for(var i = 0; i < 10 ; i++){
+            x[i] = new Array(10);
+        }
+        for(i = 0 ; i < 10 ; i++){
+            for(var j = 0 ; j < 10 ;j++){                             /*生成100个小格子*/
+                x[i][j] = document.createElement("div");
+                main.appendChild(x[i][j]);
+                x[i][j].value = "true";
+                x[i][j].style = "height:40px;" +                    /*给这100个小格子添加样式*/
+                        "width:40px;" +
+                        "background-color:red;" +
+                        "float:left;" +
+                        "box-sizing: border-box;" +
+                        "border:1px solid purple;" +
+                        "text-align: center;" +
+                        "line-height:40px;"
+            }
+        }
+        var xz = 0,yz = 0;
+        for(i = 0 ; i < 10 ; i++){                   /*埋雷*/
+            xz = parseInt(Math.random()*10);
+            yz = parseInt(Math.random()*10);
+            x[xz][yz].value = "false";
+            console.log(xz + " " + yz);
+        }
+        var num = 0;
+        function nu(){                               /*给已经点过的格子加上周围雷的个数*/
+        for(i = 0 ; i < 10 ; i++){
+             for(j = 0 ; j < 10 ; j++){
+                for(var m = i - 1 ; m <= i + 1 ; m++){
+                    for(n = j - 1 ; n <= j + 1; n++){
+                        if(m >= 0 && m <=9 && n >=0 && n <= 9){
+                            if(x[m][n].value == "false"){
+                                num++
+                            }
+                        }
+                    }
+                }
+                 if(x[i][j].style.backgroundColor == "yellow")     /*点击的格子不是雷，就将雷数显示出来*/
+                    x[i][j].innerText = num;
+                 num = 0;                   /*雷数置零*/
+             }
+        }
+        }
+       var rn = 0;
+        function end(){
+            for(i = 0 ; i < 10 ; i ++){
+                for(j = 0 ; j < 10 ; j ++){
+                    if(x[i][j].backgroundColor == "red"){
+                        rn++;
+                    }
+                }
+            }
+            if(rn == 10){
+                window.alert("VICTORY");
+            }
+        }
+
+        for(i = 0; i < 10 ; i++){
+            for(j = 0 ; j < 10 ; j++){
+                (function(m,n){
+                    x[m][n].addEventListener("click",function appear(){            /*点击函数*/
+                        console.log (m + " "+ n);
+                        x[m][n].style.backgroundColor = "yellow";
+                        if(x[m][n].value == "false"){
+                            x[m][n].style.backgroundColor = "black";
+                            window.alert("你踩到雷了！！！");
+                        }
+                        for(var p = m - 1; p <= m + 1; p++){
+                            for(var q = n - 1 ; q <= n + 1 ; q++){
+                                if( p >= 0 && p <= 9 && q >= 0 && q <= 9){
+                                   if(x[p][q].value == "true"){
+                                      temp  = 1;
+                                   }
+                                    else{
+                                       temp = 0;
+                                       break;
+                                   }
+                                }
+                            }
+                            if(temp == 0){
+                                break;
+                            }
+                        }
+                        if(temp == 1){
+                            for( p = m - 1; p <= m + 1; p++){
+                                for( q = n - 1 ; q <= n + 1 ; q++){
+                                    if( p >= 0 && p <= 9 && q >= 0 && q <= 9){
+                                     x[p][q].style.backgroundColor = "yellow";
+                                        if(x[p][q].value == "false"){
+                                            x[p][q].style.backgroundColor = "black";
+                                        }
+                                        if(x[m][n].value == "false"){
+                                            window.alert("你踩到雷了！！");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        nu();
+                        end();
+                        console.log(rn);
+                        rn = 0;
+                    })
+                })(i,j);
+            }
+        }
+    </script>
+</body>
+</html>
